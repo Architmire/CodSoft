@@ -1,84 +1,57 @@
 tasks = []
 
-def display_tasks():
+def view_tasks():
     if not tasks:
         print("\nNo tasks found.")
     else:
-        print("\nYour To-Do List:")
-        for i, task in enumerate(tasks, start=1):
-            status = "Completed" if task["completed"] else "Pending"
-            print(f"{i}. {task['title']}  |  Status: {status}")
+        print("\nTo-Do List:")
+        for i, task in enumerate(tasks, 1):
+            status = "Done" if task["done"] else "Pending"
+            print(f"{i}. {task['title']} - {status}")
 
 def add_task():
     title = input("Enter task title: ")
-    task = {"title": title, "completed": False}
-    tasks.append(task)
-    print("Task added successfully.")
+    tasks.append({"title": title, "done": False})
+    print("Task added.")
 
 def update_task():
-    display_tasks()
+    view_tasks()
     try:
-        index = int(input("Enter the task number to update: "))
-        if 1 <= index <= len(tasks):
-            new_title = input("Enter new title: ")
-            tasks[index - 1]["title"] = new_title
-            print("Task updated successfully.")
-        else:
-            print("Invalid task number.")
-    except ValueError:
-        print("Please enter a valid number.")
+        idx = int(input("Enter task number to update: ")) - 1
+        if 0 <= idx < len(tasks):
+            new_title = input("Enter new task title: ")
+            tasks[idx]["title"] = new_title
+            print("Task updated.")
+    except:
+        print("Invalid input.")
 
-def mark_completed():
-    display_tasks()
+def mark_done():
+    view_tasks()
     try:
-        index = int(input("Enter the task number to mark as completed: "))
-        if 1 <= index <= len(tasks):
-            tasks[index - 1]["completed"] = True
-            print("Task marked as completed.")
-        else:
-            print("Invalid task number.")
-    except ValueError:
-        print("Please enter a valid number.")
-
-def delete_task():
-    display_tasks()
-    try:
-        index = int(input("Enter the task number to delete: "))
-        if 1 <= index <= len(tasks):
-            removed = tasks.pop(index - 1)
-            print(f"Task '{removed['title']}' deleted successfully.")
-        else:
-            print("Invalid task number.")
-    except ValueError:
-        print("Please enter a valid number.")
+        idx = int(input("Enter task number to mark as done: ")) - 1
+        if 0 <= idx < len(tasks):
+            tasks[idx]["done"] = True
+            print("Task marked as done.")
+    except:
+        print("Invalid input.")
 
 def main():
     while True:
-        print("\n====== To-Do List Menu ======")
-        print("1. View Tasks")
-        print("2. Add Task")
-        print("3. Update Task")
-        print("4. Mark Task as Completed")
-        print("5. Delete Task")
-        print("6. Exit")
-
-        choice = input("Enter your choice (1-6): ")
+        print("\n1. View\n2. Add\n3. Update\n4. Mark Done\n5. Exit")
+        choice = input("Choose an option: ")
 
         if choice == "1":
-            display_tasks()
+            view_tasks()
         elif choice == "2":
             add_task()
         elif choice == "3":
             update_task()
         elif choice == "4":
-            mark_completed()
+            mark_done()
         elif choice == "5":
-            delete_task()
-        elif choice == "6":
-            print("Exiting the To-Do List. Goodbye!")
             break
         else:
-            print("Invalid input. Please choose between 1 and 6.")
+            print("Invalid option.")
 
 if __name__ == "__main__":
     main()
