@@ -1,61 +1,44 @@
 import random
 
-def get_user_choice():
-    print("\nChoose one: rock, paper, or scissors")
-    choice = input("Your choice: ").lower()
-    while choice not in ["rock", "paper", "scissors"]:
-        print("Invalid choice. Try again.")
-        choice = input("Your choice: ").lower()
+def get_choice():
+    choice = input("Enter rock, paper or scissors: ").lower()
+    while choice not in ['rock', 'paper', 'scissors']:
+        print("Invalid choice.")
+        choice = input("Enter again: ").lower()
     return choice
 
-def get_computer_choice():
-    return random.choice(["rock", "paper", "scissors"])
-
-def determine_winner(user, computer):
+def decide_winner(user, computer):
     if user == computer:
-        return "tie"
-    elif (user == "rock" and computer == "scissors") or \
-         (user == "scissors" and computer == "paper") or \
-         (user == "paper" and computer == "rock"):
-        return "user"
+        return "It's a tie!"
+    elif (user == 'rock' and computer == 'scissors') or \
+         (user == 'paper' and computer == 'rock') or \
+         (user == 'scissors' and computer == 'paper'):
+        return "You win!"
     else:
-        return "computer"
+        return "Computer wins!"
 
-def play_game():
+def play():
     user_score = 0
     computer_score = 0
-    round_number = 1
 
     while True:
-        print(f"\n--- Round {round_number} ---")
-        user = get_user_choice()
-        computer = get_computer_choice()
+        user = get_choice()
+        computer = random.choice(['rock', 'paper', 'scissors'])
 
-        print(f"You chose: {user}")
-        print(f"Computer chose: {computer}")
+        print(f"You: {user} | Computer: {computer}")
+        result = decide_winner(user, computer)
+        print(result)
 
-        winner = determine_winner(user, computer)
-
-        if winner == "tie":
-            print("It's a tie!")
-        elif winner == "user":
-            print("You win this round!")
+        if "You win" in result:
             user_score += 1
-        else:
-            print("Computer wins this round.")
+        elif "Computer wins" in result:
             computer_score += 1
 
-        print(f"Score => You: {user_score} | Computer: {computer_score}")
+        print(f"Score - You: {user_score}, Computer: {computer_score}")
 
-        play_again = input("Do you want to play another round? (yes/no): ").lower()
-        if play_again != "yes":
+        again = input("Play again? (yes/no): ").lower()
+        if again != 'yes':
             break
-        round_number += 1
-
-    print("\nFinal Score:")
-    print(f"You: {user_score}")
-    print(f"Computer: {computer_score}")
-    print("Thanks for playing!")
 
 if __name__ == "__main__":
-    play_game()
+    play()
